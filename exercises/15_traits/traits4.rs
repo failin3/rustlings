@@ -11,12 +11,15 @@ impl Licensed for SomeSoftware {}
 impl Licensed for OtherSoftware {}
 
 // TODO: Fix the compiler error by only changing the signature of this function.
-fn compare_license_types(software1: ???, software2: ???) -> bool {
+// I think these implementations are the same, but I could enfore the same type with <T: Licensed> instead of <T: Licensed, U: Licensed>
+// fn compare_license_types<T: Licensed, U: Licensed>(software1: T, software2: U) -> bool {
+fn compare_license_types(software1: impl Licensed, software2: impl Licensed) -> bool {
     software1.licensing_info() == software2.licensing_info()
 }
 
 fn main() {
     // You can optionally experiment here.
+    assert!(compare_license_types(SomeSoftware, SomeSoftware));
 }
 
 #[cfg(test)]
